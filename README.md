@@ -5,5 +5,5 @@ Stream any type of video torrent in the browser!
 
 Code repository for the tutorial on https://milankragujevic.com/
 
-Tutorial: [placeholder]
+Tutorial: https://milankragujevic.com/showcasing-torrentflix-stream-any-torrent-in-the-browser
 
