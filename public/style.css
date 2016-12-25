@@ -1,0 +1,225 @@
+* {
+	box-sizing: border-box;
+	font-family: 'Roboto';
+}
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px 20px 0;
+}
+
+.line {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-top: solid 1px #eee;
+}
+
+.fog {
+	padding: 10px 20px;
+	color: #000;
+	border: solid 1px #000;
+	border-radius: 3px;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.fog:hover {
+	background-color: #DADADA;
+}
+
+.input-field {
+	padding: 10px 20px;
+	color: #000;
+	border: solid 1px #000;
+	border-radius: 3px;
+	text-decoration: none;
+	display: inline-block;
+	width: 100%;
+}
+
+.input-submit {
+	padding: 10px 20px;
+	color: #000;
+	border: solid 1px #000;
+	border-radius: 3px;
+	text-decoration: none;
+	display: inline-block;
+	width: 145px;
+	color: #fff;
+	background-color: #5cb85c;
+	border-color: #4cae4c;
+}
+
+.input-submit:hover {
+	background-color: #398439;
+	border-color: #255625;
+}
+
+.opensource:after {
+	clear: both;
+	content: " ";
+	display: block;
+}
+
+.opensource .fog {
+	float: left;
+}
+
+.opensource span {
+	float: left;
+	margin-left: 20px;
+	font-style: italic;
+	color: #666;
+	margin-top: 11px;
+}
+
+.submit-container:after {
+	clear: both;
+	content: " ";
+	display: block;
+}
+
+.submit-container .input-submit {
+	float: left;
+}
+
+.submit-container span {
+	float: left;
+	margin-left: 20px;
+	font-style: italic;
+	color: #666;
+	margin-top: 11px;
+}
+
+.submit-container span a {
+	color: #4cae4c;
+}
+
+.clearfix {
+	clear: both;
+}
+
+.call-to-action {
+	position: relative;
+	width: 100%;
+}
+
+.call-to-action .arrow {
+	position: absolute;
+	top: -12px;
+	right: -84px;
+	animation-name: rotate; 
+	animation-duration: 1s; 
+	animation-iteration-count: infinite;
+	transition-timing-function: linear;
+}
+
+@keyframes rotate {
+	from {
+		transform: translateX(0px);
+	}
+	50% {
+		transform: translateX(10px);
+	}
+	to { 
+		transform: translateX(0px);
+	}
+}
+
+.footer {
+	color: #333;
+	text-align: center;
+}
+
+.footer a {
+	color: #333;
+}
+
+.explain {
+	display: none;
+}
+
+.section h2 {
+	font-weight: 300;
+	margin: 0px;
+}
+
+.section .close {
+	float: right;
+	margin-top: -5px;
+	cursor: pointer;
+}
+
+.section h2.left {
+	float: left;
+}
+
+.branding img {
+	display: block;
+	float: left;
+}
+
+.branding .nav {
+	float: right;
+}
+
+.branding .nav a {
+	padding: 10px 20px;
+	color: #000;
+	border: solid 1px #000;
+	border-radius: 3px;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.torrent {
+	color: #000;
+	border: solid 1px #ddd;
+	border-radius: 3px;
+}
+
+.torrent .torrent-title {
+	padding: 10px 20px;
+	border-bottom: solid 1px #ddd;
+	background-color: #f5f5f5;
+}
+
+.torrent .torrent-file {
+	margin: 10px 20px;
+	height: 42px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: solid 1px #eee;
+}
+
+.torrent-file .icon {
+	float: left;
+	display: block;
+	margin-right: 10px;
+}
+
+.torrent-file .name {
+	line-height: 32px;
+	height: 32px;
+	display: block;
+	float: left;
+	margin-right: 10px;
+}
+
+.torrent-file a {
+	color: #337ab7;
+}
+
+.torrent-file .size {
+	line-height: 32px;
+	height: 32px;
+	display: block;
+	float: right;
+}
+
+.torrent .torrent-file:last-child {
+	border-bottom: none;
+	padding-bottom: 0px;
+	height: 32px;
+}
