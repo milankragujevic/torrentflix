@@ -1,5 +1,6 @@
 $(function() {
 	var params = window.location.hash.replace('#', '').split(';');
+	//player.html#HASH;0;360p;640x360
 	var infoHash = params[0];
 	var fileID = params[1];
 	var quality = params[2];
@@ -23,6 +24,17 @@ $(function() {
 	}
 	var width = size.split('x')[0];
 	var height = size.split('x')[1];
+	$('#video').attr('width', width);
+	$('#video').attr('height', height);
+	$('body').css({
+		width: width,
+		height: height
+	});
+	setInterval(function() {
+		$.get('/api/torrent/' + infoHash + '/keep-alive', function() {
+			console.debug('[DEBUG] Sent keep-alive request...');
+		});
+	}, 5000);
 	$.getJSON('/api/torrent/' + infoHash + '/stream/' + fileID + '/metadata.json', function(data) {
 		var video = videojs('video');
 		video.duration = function() { return video.theDuration; };
@@ -40,7 +52,11 @@ $(function() {
 			}, 100);
 			return this;
 		};
-		video.src("/stream/" + streamID + "/video.webm");
+		video.src('/api/torrent/' + infoHash + '/stream/' + fileID + '/' + quality + '.webm');
 		video.theDuration = Math.floor(data.streams[0].duration);
+		setTimeout(function() {
+			$('#loading').fadeOut(300);
+			$('#player').fadeIn(300);
+		}, 1000);
 	});
 });

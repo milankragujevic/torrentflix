@@ -76,11 +76,11 @@ var videoPresets = [
 		quality: '720p', 
 		video: {
 			codec: 'libvpx',
-			bitrate: '4M'
+			bitrate: '4096k'
 		},
 		audio: {
 			codec: 'libvorbis',
-			bitrate: '256K'
+			bitrate: '256k'
 		},
 		picture: {
 			resolution: '1280x?'
@@ -90,11 +90,11 @@ var videoPresets = [
 		quality: '480p', 
 		video: {
 			codec: 'libvpx',
-			bitrate: '3M'
+			bitrate: '3072k'
 		},
 		audio: {
 			codec: 'libvorbis',
-			bitrate: '192K'
+			bitrate: '192k'
 		},
 		picture: {
 			resolution: '854x?'
@@ -104,11 +104,11 @@ var videoPresets = [
 		quality: '360p', 
 		video: {
 			codec: 'libvpx',
-			bitrate: '2M'
+			bitrate: '2048k'
 		},
 		audio: {
 			codec: 'libvorbis',
-			bitrate: '128K'
+			bitrate: '128k'
 		},
 		picture: {
 			resolution: '640x?'
@@ -118,11 +118,11 @@ var videoPresets = [
 		quality: '240p', 
 		video: {
 			codec: 'libvpx',
-			bitrate: '1M'
+			bitrate: '1024k'
 		},
 		audio: {
 			codec: 'libvorbis',
-			bitrate: '96K'
+			bitrate: '96k'
 		},
 		picture: {
 			resolution: '426x?'
@@ -132,11 +132,11 @@ var videoPresets = [
 		quality: '144p', 
 		video: {
 			codec: 'libvpx',
-			bitrate: '0.5M'
+			bitrate: '512k'
 		},
 		audio: {
 			codec: 'libvorbis',
-			bitrate: '64K'
+			bitrate: '64k'
 		},
 		picture: {
 			resolution: '256x?'
@@ -181,7 +181,7 @@ app.get('/api/video-presets', function(req, res) {
 	res.status(200).send(presets);
 });
 
-app.get('/api/:infoHash/keep-alive', function(req, res) {
+app.get('/api/torrent/:infoHash/keep-alive', function(req, res) {
 	if(typeof req.params.infoHash == 'undefined' || req.params.infoHash == '') {
         res.status(500).send('Missing infoHash parameter!'); return;
     }
@@ -192,7 +192,7 @@ app.get('/api/:infoHash/keep-alive', function(req, res) {
 	}
 	var _time = time();
 	store.lastAccess[infoHash] = _time;
-	res.status(200).send(_time);
+	res.status(200).send(_time.toString());
 });
 
 app.post('/api/add-torrent', function(req, res) {
@@ -305,11 +305,6 @@ app.get('/api/torrent/:infoHash/stream/:index/metadata.json', function(req, res)
 		res.status(404).send('Torrent not found!');
 		return;
 	}
-	var params = getVideoParams(quality);
-	if(!params) {
-		res.status(404).send('Video quality not available!');
-		return;
-	}
 	try {
         var torrent = client.get(uri);
         if(typeof torrent.files[index] == 'undefined') {
@@ -342,6 +337,7 @@ app.get('/api/torrent/:infoHash/stream/:index/:quality.webm', function(req, res)
 		res.status(404).send('Video quality not available!');
 		return;
 	}
+	console.log(params);
 	var start = false;
 	if(typeof req.query.start != 'undefined' && req.query.start != null) {
 		start = parseFloat(req.query.start);
@@ -356,10 +352,10 @@ app.get('/api/torrent/:infoHash/stream/:index/:quality.webm', function(req, res)
 		var command = ffmpeg('http://localhost:' + port + '/api/torrent/' + infoHash + '/download/' + index)
 		.format('webm')
 		.size(params.picture.resolution)
-		.videoBitrate(params.video.bitrate)
 		.videoCodec(params.video.codec)
-		.audioBitrate(params.audio.bitrate)
+		.videoBitrate(params.video.bitrate)
 		.audioCodec(params.audio.codec)
+		.audioBitrate(params.audio.bitrate)
 		.audioChannels(2)
 		.on('end', function() {
 			console.log('file has been converted succesfully');
