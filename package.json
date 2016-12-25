@@ -1,0 +1,33 @@
+{
+  "name": "torrentflix",
+  "version": "1.0.0",
+  "description": "Stream any type of video torrent in the browser!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milankragujevic/torrentflix.git"
+  },
+  "keywords": [
+    "torrentflix",
+    "torrents",
+    "webtorrent",
+    "streaming",
+    "ffmpeg"
+  ],
+  "author": "Milan Kragujević",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/milankragujevic/torrentflix/issues"
+  },
+  "homepage": "https://github.com/milankragujevic/torrentflix#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "fluent-ffmpeg": "^2.1.0",
+    "jQuery": "^1.7.4",
+    "webtorrent": "^0.98.0"
+  }
+}
