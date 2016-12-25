@@ -223,3 +223,39 @@
 	padding-bottom: 0px;
 	height: 32px;
 }
+
+.torrents-list {
+	display: none;
+}
+
+.torrent-player {
+	display: none;
+}
+
+.loading-screen {
+	display: none;
+	text-align: center;
+	margin: 20px;
+}
+
+.cancel-torrent {
+	margin-top: 20px;
+}
+
+.cancel-torrent a {
+	padding: 10px 20px;
+	color: #000;
+	border: solid 1px #000;
+	border-radius: 3px;
+	text-decoration: none;
+	display: inline-block;
+}
+
+p.notice {
+	color: #333;
+	font-style: italic;
+}
+
+.player iframe {
+	margin-top: 20px;
+}

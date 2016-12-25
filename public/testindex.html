@@ -6,19 +6,7 @@
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script>
     $(function() {
-        $('.stream').click(function() {
-            var torrent = $('input').val();
-            $('.loading').show();
-            $('.input').hide();
-            $.post('/api/parse-torrent', {uri: torrent}, function(data) {
-				var infoHash = data.infoHash;
-				$.post('/api/add-torrent', {infoHash: infoHash}, function(data) {
-					$.get('/api/torrent/' + infoHash + '/files', function(data) {
-						console.log(data);
-					});
-				});
-            });
-        });
+        
     });
     </script>
 </head>

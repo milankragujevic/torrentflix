@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var parseTorrent = require('parse-torrent');
 var path = require('path');
 var http = require('http');
+var fs = require('fs');
+var multipart = require('connect-multiparty');
 var app = express();
 
 var ffmpeg = require('fluent-ffmpeg');
@@ -48,7 +50,7 @@ var buildMagnetURI = function(infoHash) {
 };
 
 var myParseTorrent = function(uri, callback) {
-	if(uri.substring(0, 7) == 'http://' || uri.substring(0, 8) == 'https://') {
+	if(typeof uri == 'string' && (uri.substring(0, 7) == 'http://' || uri.substring(0, 8) == 'https://')) {
 		parseTorrent.remote(uri, function(err, data) {
 			if(err) { callback(false); }
 			callback(data.infoHash.toLowerCase());
@@ -195,6 +197,19 @@ app.get('/api/torrent/:infoHash/keep-alive', function(req, res) {
 	res.status(200).send(_time.toString());
 });
 
+app.post('/api/upload-torrent', multipart(), function (req, res) {
+	var file = req.files && req.files.file;
+	if(!file) {
+		res.status(500).send('Missing file parameter!'); return;
+	}
+	myParseTorrent(fs.readFileSync(file.path), function(infoHash) {
+		if(!infoHash) {
+			return res.status(500).send('Error. ');
+		}
+		res.status(200).send({ infoHash: infoHash });
+	});
+});
+
 app.post('/api/add-torrent', function(req, res) {
     if(typeof req.body.infoHash == 'undefined' || req.body.infoHash == '') {
         res.status(500).send('Missing infoHash parameter!'); return;
@@ -241,7 +256,7 @@ app.get('/api/torrent/:infoHash/files', function(req, res) {
 			});
 		}
         
-        res.status(200).send(files);
+        res.status(200).send({ title: torrent.name, files: files });
     } catch (err) {
         res.status(500).send('Error: ' + err.toString());
     }
@@ -337,7 +352,6 @@ app.get('/api/torrent/:infoHash/stream/:index/:quality.webm', function(req, res)
 		res.status(404).send('Video quality not available!');
 		return;
 	}
-	console.log(params);
 	var start = false;
 	if(typeof req.query.start != 'undefined' && req.query.start != null) {
 		start = parseFloat(req.query.start);

@@ -25,42 +25,35 @@
 			<div class="line"></div>
 			<div class="call-to-action">
 				<div class="arrow"><i class="fa fa-arrow-left fa-4x"></i></div>
-				<p></p><input type="text" class="input-field" placeholder="Enter torrent or magnet URI here..." name="torrent" /></p>
+				<p><input type="text" value="" class="input-field" placeholder="Enter torrent or magnet URI here..." name="torrent" /></p>
 				<input type="file" name="file" class="input-file" style="display:none" />
 				<p class="submit-container">
 					<a href="#" class="input-submit">Stream torrent</a>
 					<span>Or, <a href="#" class="input-file-picker">Upload a .torrent</a> from your computer.</span>
 				</p>
 			</div>
+			<div class="loading-screen">
+				<p><img src="/loading.gif" /></p>
+				<p>Loading data, please wait...</p>
+			</div>
 			<div class="torrents-list">
 				<div class="torrent">
-					<div class="torrent-title">Bad.Santa.2.2016.READNFO.HDRip.XviD.AC3-EVO</div>
-					<div class="torrent-files">
-						<div class="torrent-file">
-							<span class="icon">
-								<i class="fa fa-file-video-o fa-2x"></i>
-							</span>
-							<span class="name"><a href="#" data-id="">Bad.Santa.2.2016.READNFO.HDRip.XviD.AC3-EVO.avi</a></span>
-							<span class="size">(1,397 MB)</span>
-							<div class="clearfix"></div>
-						</div>
-						<div class="torrent-file">
-							<span class="icon">
-								<i class="fa fa-file-o fa-2x"></i>
-							</span>
-							<span class="name"><a href="#" data-id="">Bad.Santa.2.2016.READNFO.HDRip.XviD.AC3-EVO.avi</a></span>
-							<span class="size">(1,397 MB)</span>
-							<div class="clearfix"></div>
-						</div>
-						<div class="torrent-file">
-							<span class="icon">
-								<i class="fa fa-file-video-o fa-2x"></i>
-							</span>
-							<span class="name"><a href="#" data-id="">Bad.Santa.2.2016.READNFO.HDRip.XviD.AC3-EVO.avi</a></span>
-							<span class="size">(1,397 MB)</span>
-							<div class="clearfix"></div>
-						</div>
-					</div>
+					<div class="torrent-title"></div>
+					<div class="torrent-files"></div>
+				</div>
+				<div class="cancel-torrent">
+					<a href="#" data-infoHash="">Stop Torrent</a>
+				</div>
+				<p class="notice">Torrent will be stopped and deleted automatically if you don't start playing it in 30 minutes. </p>
+			</div>
+			<div class="torrent-player section">
+				<div class="title">
+					<h2 class="left"></h2>
+					<div class="close"><i class="fa fa-times fa-2x"></i></div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="player">
+					<iframe src="about:blank" allowfullscreen width="760px" height="427px" scrolling="no" frameborder="0"></iframe>
 				</div>
 			</div>
 		</div>
