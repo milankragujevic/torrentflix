@@ -1,7 +1,7 @@
 # torrentflix
 Stream any type of video torrent in the browser!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/EJ1afwZQiMI" frameborder="0" allowfullscreen></iframe>
+[![Playing Xvid torrents in the browser with Node and FFmpeg ](https://img.youtube.com/vi/EJ1afwZQiMI/0.jpg)](https://www.youtube.com/watch?v=EJ1afwZQiMI)
 
 Code repository for the tutorial on https://milankragujevic.com/
 
