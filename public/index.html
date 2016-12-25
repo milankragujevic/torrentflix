@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TorrentFlix - Stream any torrent in your browser!</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.2.4/sweetalert2.min.css">
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/sweetalert2/6.2.4/sweetalert2.min.js"></script>
+	<link rel="shortcut icon" href="favicon.ico">
+</head>
+<body>
+	<style>
+	* {
+		box-sizing: border-box;
+		font-family: 'Roboto';
+	}
+	.container {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 20px 20px 0;
+	}
+
+	.line {
+		margin-top: 20px;
+		margin-bottom: 20px;
+		border-top: solid 1px #eee;
+	}
+
+	.fog {
+		padding: 10px 20px;
+		color: #000;
+		border: solid 1px #000;
+		border-radius: 3px;
+		text-decoration: none;
+		display: inline-block;
+	}
+
+	.fog:hover {
+		background-color: #DADADA;
+	}
+
+	.input-field {
+		padding: 10px 20px;
+		color: #000;
+		border: solid 1px #000;
+		border-radius: 3px;
+		text-decoration: none;
+		display: inline-block;
+		width: 100%;
+	}
+
+	.input-submit {
+		padding: 10px 20px;
+		color: #000;
+		border: solid 1px #000;
+		border-radius: 3px;
+		text-decoration: none;
+		display: inline-block;
+		width: 145px;
+		color: #fff;
+		background-color: #5cb85c;
+		border-color: #4cae4c;
+	}
+
+	.input-submit:hover {
+		background-color: #398439;
+		border-color: #255625;
+	}
+
+	.opensource:after {
+		clear: both;
+		content: " ";
+		display: block;
+	}
+
+	.opensource .fog {
+		float: left;
+	}
+
+	.opensource span {
+		float: left;
+		margin-left: 20px;
+		font-style: italic;
+		color: #666;
+		margin-top: 11px;
+	}
+
+	.submit-container:after {
+		clear: both;
+		content: " ";
+		display: block;
+	}
+
+	.submit-container .input-submit {
+		float: left;
+	}
+
+	.submit-container span {
+		float: left;
+		margin-left: 20px;
+		font-style: italic;
+		color: #666;
+		margin-top: 11px;
+	}
+
+	.submit-container span a {
+		color: #4cae4c;
+	}
+
+	.clearfix {
+		clear: both;
+	}
+
+	.call-to-action {
+		position: relative;
+		width: 100%;
+	}
+
+	.call-to-action .arrow {
+		position: absolute;
+		top: -12px;
+		right: -84px;
+		animation-name: rotate; 
+		animation-duration: 1s; 
+		animation-iteration-count: infinite;
+		transition-timing-function: linear;
+	}
+
+	@keyframes rotate {
+		from {
+			transform: translateX(0px);
+		}
+		50% {
+			transform: translateX(10px);
+		}
+		to { 
+			transform: translateX(0px);
+		}
+	}
+
+	.footer {
+		color: #333;
+		text-align: center;
+	}
+
+	.footer a {
+		color: #333;
+	}
+	
+	.explain {
+		display: none;
+	}
+
+	.section h2 {
+		font-weight: 300;
+		margin: 0px;
+	}
+
+	.section .close {
+		float: right;
+		margin-top: -5px;
+		cursor: pointer;
+	}
+
+	.section h2.left {
+		float: left;
+	}
+	
+	.branding img {
+		display: block;
+		float: left;
+	}
+	
+	.branding .nav {
+		float: right;
+	}
+	
+	.branding .nav a {
+		padding: 10px 20px;
+		color: #000;
+		border: solid 1px #000;
+		border-radius: 3px;
+		text-decoration: none;
+		display: inline-block;
+	}
+	
+	.torrent {
+		color: #000;
+		border: solid 1px #ddd;
+		border-radius: 3px;
+	}
+	
+	.torrent .torrent-title {
+		padding: 10px 20px;
+		border-bottom: solid 1px #ddd;
+		background-color: #f5f5f5;
+	}
+	
+	.torrent .torrent-file {
+		margin: 10px 20px;
+		height: 42px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		padding-bottom: 10px;
+		border-bottom: solid 1px #eee;
+	}
+	
+	.torrent-file .icon {
+		float: left;
+		display: block;
+		margin-right: 10px;
+	}
+	
+	.torrent-file .name {
+		line-height: 32px;
+		height: 32px;
+		display: block;
+		float: left;
+		margin-right: 10px;
+	}
+	
+	.torrent-file a {
+		color: #337ab7;
+	}
+	
+	.torrent-file .size {
+		line-height: 32px;
+		height: 32px;
+		display: block;
+		float: right;
+	}
+	
+	.torrent .torrent-file:last-child {
+		border-bottom: none;
+		padding-bottom: 0px;
+		height: 32px;
+	}
+	</style>
+	<script>
+	$(function() {
+		$('.explain.section .close').off('click').on('click', function() {
+			$('.explain').stop(true,true).fadeOut(300);
+			setTimeout(function() {
+				$('.content-other-than-about').stop(true,true).fadeIn(300);
+			}, 300);
+		});
+		$('.about-global-nav').off('click').on('click', function() {
+			$('.content-other-than-about').stop(true,true).fadeOut(300);
+			setTimeout(function() {
+				$('.explain').stop(true,true).fadeIn(300);
+			}, 300);
+		});
+	});
+	</script>
+	<div class="container">
+		<div class="branding">
+			<img src="logo.png" width="240" />
+			<div class="nav">
+				<a href="#" class="about-global-nav">About</a>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="content-other-than-about">
+			<div class="line"></div>
+			<div class="call-to-action">
+				<div class="arrow"><i class="fa fa-arrow-left fa-4x"></i></div>
+				<p></p><input type="text" class="input-field" placeholder="Enter torrent or magnet URI here..." name="torrent" /></p>
+				<input type="file" name="file" class="input-file" style="display:none" />
+				<p class="submit-container">
+					<a href="#" class="input-submit">Stream torrent</a>
+					<span>Or, <a href="#" class="input-file-picker">Upload a .torrent</a> from your computer.</span>
+				</p>
+			</div>
+			<div class="torrents-list">
+				<div class="torrent">
+					<div class="torrent-title">Bad.Santa.2.2016.READNFO.HDRip.XviD.AC3-EVO</div>
+					<div class="torrent-files">
+						<div class="torrent-file">
+							<span class="icon">
+								<i class="fa fa-file-video-o fa-2x"></i>
+							</span>
+							<span class="name"><a href="#" data-id="">Bad.Santa.2.2016.READNFO.HDRip.XviD.AC3-EVO.avi</a></span>
+							<span class="size">(1,397 MB)</span>
+							<div class="clearfix"></div>
+						</div>
+						<div class="torrent-file">
+							<span class="icon">
+								<i class="fa fa-file-o fa-2x"></i>
+							</span>
+							<span class="name"><a href="#" data-id="">Bad.Santa.2.2016.READNFO.HDRip.XviD.AC3-EVO.avi</a></span>
+							<span class="size">(1,397 MB)</span>
+							<div class="clearfix"></div>
+						</div>
+						<div class="torrent-file">
+							<span class="icon">
+								<i class="fa fa-file-video-o fa-2x"></i>
+							</span>
+							<span class="name"><a href="#" data-id="">Bad.Santa.2.2016.READNFO.HDRip.XviD.AC3-EVO.avi</a></span>
+							<span class="size">(1,397 MB)</span>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="explain section">
+			<div class="line"></div>
+			<div class="title">
+				<h2 class="left">About TorrentFlix</h2>
+				<div class="close"><i class="fa fa-times fa-2x"></i></div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="contents">
+				<p>Start watching in seconds! Just paste a Magnet URI, an URL to a torrent file, or simply upload a torrent file from your computer, and in seconds watch any video contained inside!</p>
+				<p>TorrentFlix can play <b>any</b> video format, including but not limited to MP4, MKV, AVI, WMV and FLV! It manages to do this by <u title="Decoding incompatible content and re-encoding it to the appropriate format on the fly. ">transcoding</u> the video content while it downloads!</p>
+				<p>This tool is unique in it's ability and it's the only such tool on the market. And it's <b>completely open source</b>! </p>
+				<p class="opensource"><a class="fog" href="https://github.com/milankragujevic/torrentflix" target="_blank">Fork us on GitHub!</a> <span>Licensed under GPL v3</span></p>
+			</div>
+		</div>
+		<div class="line"></div>
+		<div class="footer">
+			<p>Version 0.2 <br> Copyright &copy; 2017 Milan Kragujević and contributors. <br> Licensed under GNU Public License version 3.0, available <a href="#" target="_blank">here</a>. <br> Powered by <a href="http://webtorrent.io/" target="_blank">WebTorrent</a>. </p>
+		</div>
+	</div>
+</body>
+</html>
